@@ -3,7 +3,7 @@ import { generateCadenceIncrementSequence, generateSymbolSumSequence, generateSl
 describe(`unit testing for the slot sequence generation action functions`, () => {
 	const testCases = [
 		{
-			anticipationconfig: {
+			anticipationConfig: {
 				initialCadence: 0,
 				columnSize: 6,
 				minToAnticipate: 1,
@@ -22,7 +22,7 @@ describe(`unit testing for the slot sequence generation action functions`, () =>
 			},
 		},
 		{
-			anticipationconfig: {
+			anticipationConfig: {
 				initialCadence: 0,
 				columnSize: 5,
 				minToAnticipate: 2,
@@ -42,7 +42,7 @@ describe(`unit testing for the slot sequence generation action functions`, () =>
 			},
 		},
 		{
-			anticipationconfig: {
+			anticipationConfig: {
 				initialCadence: 0,
 				columnSize: 5,
 				minToAnticipate: 2,
@@ -61,7 +61,7 @@ describe(`unit testing for the slot sequence generation action functions`, () =>
 			},
 		},
 		{
-			anticipationconfig: {
+			anticipationConfig: {
 				initialCadence: 0,
 				columnSize: 5,
 				minToAnticipate: 2,
@@ -82,13 +82,14 @@ describe(`unit testing for the slot sequence generation action functions`, () =>
 	];
 
 	test.each(testCases)
-		("for anticipationConfig %j", ({ anticipationconfig, symbols, expected }) => {
-			const receivedSums = generateSymbolSumSequence(symbols, anticipationconfig);
-			const receivedIncrements = generateCadenceIncrementSequence(receivedSums, anticipationconfig);
-			const receivedCadences = generateSlotCadenceSequence(symbols, anticipationconfig);
+		("for anticipationConfig %j", ({ anticipationConfig, symbols, expected }) => {
+			const receivedSums = generateSymbolSumSequence(symbols, anticipationConfig);
+			const receivedIncrements = generateCadenceIncrementSequence(receivedSums, anticipationConfig);
+			const receivedCadences = generateSlotCadenceSequence(symbols, anticipationConfig);
 
 			expect(receivedSums).toStrictEqual(expected.symbolSums);
 			expect(receivedIncrements).toStrictEqual(expected.cadenceIncrements);
 			expect(receivedCadences).toStrictEqual(expected.slotCadences);
 		});
 });
+

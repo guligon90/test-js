@@ -1,4 +1,4 @@
-import { AnticipatorConfig, RoundsCadences, Rounds } from "./types";
+import { AnticipatorConfig, Rounds } from "./types";
 
 /**
  * Anticipator configuration. Has all information needed to check anticipator.

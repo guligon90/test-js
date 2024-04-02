@@ -6,7 +6,7 @@ export type AnticipatorConfig = {
 	anticipateCadence: number;
 	defaultCadence: number;
 };
-  
+
 export type SlotCoordinate = {
 	column: number;
 	row: number;
@@ -20,6 +20,7 @@ export type Round = {
 export type Rounds = Array<Round>;
 
 export type SlotCadence = Array<number>;
+export type NumericSequence = Array<number>;
 
 export type RoundCadence = {
 	roundIndex: number;
