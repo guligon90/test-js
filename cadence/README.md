@@ -41,7 +41,7 @@ The expected result for the cadence is: [0, 1, 3, 5, 7, 8 ]
 
 ## What should you deliver?
 
-### Slot Machine Cadence:
+### Slot Machine Cadence
 
 Each game round you will receive coordinates of special symbols positions in the columns and rows.
 Your function must return all game rounds with the slot machine cadence to stop the columns.
@@ -50,6 +50,6 @@ _PS: Do overthink this. It is required that your code contemplates every special
 
 ---
 
-## That's it!
+## That's it
 
 Feel free to contact us should you face any blocking issues or difficulties that stop your progress.
