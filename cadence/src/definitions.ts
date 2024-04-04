@@ -15,8 +15,8 @@ const anticipatorConfig: AnticipatorConfig = {
   maxToAnticipate: 3,
   anticipateCadence: 2,
   defaultCadence: 0.25,
-  };
-  
+};
+
 /**
  * Game rounds with special symbols position that must be used to generate the SlotCadences.
  */
@@ -44,6 +44,5 @@ const gameRounds: Rounds = [
     ],
   },
 ];
-
 
 export { anticipatorConfig, gameRounds };
