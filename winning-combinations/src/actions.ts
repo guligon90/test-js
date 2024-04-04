@@ -1,48 +1,62 @@
 import { combinatorConfig } from "./definitions";
-import { IndexMap, WinningCombinationsResult } from "./types";
-import { performSequentialAnalysisOnArray } from "./validation";
+import { extractNumericSequences, reduceWinningCombinations } from "./helpers";
+import { WinningCombination, WinningCombinations } from "./types";
 
-export function extractSymbolIndexes(list: number[], symbolToSearch: number): number[] {
-  return list
-    .map((item, i) => item === symbolToSearch ? i : -1) // maps only indexes for matching symbols
-    .filter(index => index !== -1); // filters away the "undefined" indexes
-}
+function sanitizeRegularCombinations(
+  combinations: WinningCombinations,
+  minCombinationLength: number,
+): WinningCombinations {
+  const sanitizedCombinations: WinningCombinations = [];
 
-export function mapSymbolsToIndexes(lines: number[]): IndexMap {
-  const { payingSymbols, wildSymbol } = combinatorConfig;
-  const allowedSybols = [ wildSymbol, ...payingSymbols ];
+  for (const combination of combinations) {
+    const [payingSymbol, sequence] = combination;
+    const sanitized = extractNumericSequences(sequence).find((sequence) => sequence.length >= minCombinationLength);
 
-  return allowedSybols.reduce<IndexMap>((map, payingSymbol) => {
-    const indexes = extractSymbolIndexes(lines, payingSymbol);
-
-    if (indexes.length) {
-      map[payingSymbol] = map[payingSymbol] === undefined
-        ? indexes // Initializes map for payingSymbol
-        : [...map[payingSymbol], ...indexes]; // only updates existing data
-    }
-
-    return map;
-  }, {});
-}
-
-export function extractWinningCombinations(lines: number[]): WinningCombinationsResult {
-  const { minCombinationLength } = combinatorConfig;
-  const payingLines = [];
-  const mappedIndexes = mapSymbolsToIndexes(lines);
-
-  for (const mapItem of Object.entries(mappedIndexes)) {
-    const [payingSymbol, indexes] = mapItem;
-
-    if (indexes.length >= minCombinationLength) {
-      // const { isAchievable, violatingIndexList } = performSequentialAnalysisOnArray(indexes);
-
-      // const sanitizedIndexList = isAchievable && violatingIndexList?.length
-      //   ? [ ...violatingIndexList.map(idxToRemove => indexes.slice(0, idxToRemove).concat(indexes.slice(idxToRemove+1)))]
-      //   : indexes;
-      
-      payingLines.push([parseInt(payingSymbol), indexes]);
+    if (sanitized) {
+      sanitizedCombinations.push([payingSymbol, sanitized]);
     }
   }
 
-  return payingLines;
+  return sanitizedCombinations;
+}
+
+function sanitizeWildCombinations(
+  wildCombination: WinningCombination,
+  combinations: WinningCombinations,
+  wildSymbol: number,
+  minCombinationLength: number,
+): WinningCombinations {
+  const filtered: WinningCombinations = combinations
+    // Extract all combinations not mapped to the wild symbol.
+    .filter((item) => item[0] !== wildSymbol);
+
+  // Do the merge between the combinations of both paying and wild symbols, sorting them at the end
+  const rawWildCombinations: WinningCombinations =
+    filtered.length > 0
+      ? filtered.map((item) => [item[0], [...wildCombination[1], ...item[1]].sort()])
+      : combinations.map((item) => [wildSymbol, item[1]]);
+
+  // Only the valid merged (sequential) combinations are extracted, i.e.
+  // the ones whose size is greater than the mininum specified by the paying line
+  return sanitizeRegularCombinations(rawWildCombinations, minCombinationLength);
+}
+
+export function extractWinningCombinations(line: number[]): WinningCombinations {
+  const { minCombinationLength, payingSymbols, wildSymbol } = combinatorConfig;
+  const allowedSymbols = [wildSymbol, ...payingSymbols];
+
+  const combinations = allowedSymbols.reduce<WinningCombinations>(
+    (acc, payingSymbol) => reduceWinningCombinations(acc, payingSymbol, line),
+    [],
+  );
+
+  if (combinations.length > 0) {
+    const wildCombination = combinations.find((item) => item[0] === wildSymbol);
+
+    return wildCombination
+      ? sanitizeWildCombinations(wildCombination, combinations, wildSymbol, minCombinationLength)
+      : sanitizeRegularCombinations(combinations, minCombinationLength);
+  }
+
+  return [];
 }

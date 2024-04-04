@@ -1,22 +1,10 @@
-export type IndexMap = {
-    [payingSymbol: number]: number[];
-}
-
-export type SequenceInstructions = {
-    isAchievable: boolean;
-    violatingIndexList?: number[];
-}
-
-export type WinningCombination = {
-    value: number;
-    indexes: number[];
-}
-
-export type WinningCombinationsResult = (number | number[])[][]
+export type Primitive = string | number | symbol | boolean;
+export type WinningCombination = [number, number[]];
+export type WinningCombinations = WinningCombination[];
 
 export type CombinatorConfig = {
-    wildSymbol: number;
-    nonPayingSymbols: number[];
-    payingSymbols: number[];
-    minCombinationLength: number;
-}
+  wildSymbol: number;
+  nonPayingSymbols: number[];
+  payingSymbols: number[];
+  minCombinationLength: number;
+};
