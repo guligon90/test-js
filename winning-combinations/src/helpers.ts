@@ -47,7 +47,7 @@ export function extractNumericSequences(list: number[]): number[][] {
   // the transition indexes, the starting index is added here,
   transitionIndexes.unshift(0);
 
-  // Build the index
+  // Build the index ranges, based on the extracted transition indexes.
   for (let j = 1; j < transitionIndexes.length; j++) {
     const bottomIndex = transitionIndexes[j - 1];
     const topIndex = transitionIndexes[j] - 1;
