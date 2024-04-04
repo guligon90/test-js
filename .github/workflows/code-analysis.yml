@@ -1,4 +1,4 @@
-name: TestJS Code Analysis
+name: Code Analysis
 
 on:
   push:
