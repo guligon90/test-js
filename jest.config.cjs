@@ -1,0 +1,21 @@
+module.exports = {
+  coverageDirectory: "../coverage",
+  coveragePathIgnorePatterns: ["<rootDir>/node_modules"],
+  collectCoverageFrom: [
+    "cadence/src/**/*.ts",
+    "winning-combinations/src/**/*.ts",
+    "!**/*.{enum,module,schema,fixtures}.ts",
+    "!**/main.ts",
+    "!**/app.module.ts",
+    "!**/health/*.ts",
+    "!**/shared/*.ts",
+    "!**/*.config.{cjs,js,ts}",
+    "!**/*.d.ts",
+    "!**/node_modules/**",
+  ],
+  moduleFileExtensions: ["ts", "js", "json"],
+  preset: "ts-jest",
+  testPathIgnorePatterns: ["<rootDir>/node_modules", "<rootDir>/build", "<rootDir>/dist"],
+  testEnvironment: "node",
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$",
+};
