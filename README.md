@@ -4,7 +4,7 @@
 
 TypeScript code base containing the solutions implementations to the problems covered in the technical assessment for the position of senior software engineer at [INO Games](https://www.linkedin.com/company/ino-games/?originalSubdomain=en).
 
-## Preliminares
+## Preliminaries
 
 ### Project dependencies
 
