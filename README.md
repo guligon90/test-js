@@ -1,4 +1,4 @@
-# TestJS (Solutions by *Guilherme Gonçalves* - [guligon90](https://www.github.com/guligon90))
+# TestJS (Solutions by _Guilherme Gonçalves_ - [guligon90](https://www.github.com/guligon90))
 
 TypeScript code base containing the solutions implementations to the problems covered in the technical assessment for the position of senior software engineer at [INO Games](https://www.linkedin.com/company/ino-games/?originalSubdomain=en).
 
