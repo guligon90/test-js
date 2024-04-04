@@ -1,4 +1,3 @@
-export type Primitive = string | number | symbol | boolean;
 export type WinningCombination = [number, number[]];
 export type WinningCombinations = WinningCombination[];
 

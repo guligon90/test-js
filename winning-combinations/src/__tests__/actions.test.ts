@@ -67,7 +67,5 @@ test.each([
 ])(`${extractWinningCombinations.name} - when line is %j returns %j`, (line, expected) => {
   const received = extractWinningCombinations(line);
 
-  // console.info(received);
-
   expect(received).toEqual(expected);
 });

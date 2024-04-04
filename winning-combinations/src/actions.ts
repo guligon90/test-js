@@ -2,6 +2,13 @@ import { combinatorConfig } from "./definitions";
 import { extractNumericSequences, reduceWinningCombinations } from "./helpers";
 import { WinningCombination, WinningCombinations } from "./types";
 
+/**
+ * This function receives a list of raw payable combinations without wild symbols and a config parameter.
+ * It returns another list, containing the sanitized winning combinations, for the allowed paying symbols.
+ * @param combinations WinningCombinations - Raw default paying combinations.
+ * @param minCombinationLength number - Minimun length for a paying combination to be considered valid.
+ * @returns WinningCombinations The sanitized winning combinations.
+ */
 function sanitizeRegularCombinations(
   combinations: WinningCombinations,
   minCombinationLength: number,
@@ -20,6 +27,15 @@ function sanitizeRegularCombinations(
   return sanitizedCombinations;
 }
 
+/**
+ * This function receives a list of raw payable combinations containing wild symbols and a config parameter.
+ * It returns another list, containing the sanitized winning combinations, for the allowed paying symbols.
+ * @param wildCombination WinningCombination - The wild combination within the set of extracted combinations.
+ * @param combinations WinningCombinations - Raw defauilt paying combinations.
+ * @param wildSymbol number - The supported wild symbol, which makes any line payable.
+ * @param minCombinationLength number - Minimun length for a paying combination to be considered valid.
+ * @returns WinningCombinations The sanitized winning combinations.
+ */
 function sanitizeWildCombinations(
   wildCombination: WinningCombination,
   combinations: WinningCombinations,
@@ -41,6 +57,12 @@ function sanitizeWildCombinations(
   return sanitizeRegularCombinations(rawWildCombinations, minCombinationLength);
 }
 
+/**
+ * This function receives a line from a slot machine, which might contain payable symbols.
+ * It returns another list, containing the sanitized winning combinations, for the allowed paying symbols.
+ * @param line number[] - The slot machine line.
+ * @returns WinningCombinations The sanitized winning combinations.
+ */
 export function extractWinningCombinations(line: number[]): WinningCombinations {
   const { minCombinationLength, payingSymbols, wildSymbol } = combinatorConfig;
   const allowedSymbols = [wildSymbol, ...payingSymbols];
