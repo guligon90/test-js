@@ -12,4 +12,11 @@ export const combinatorConfig: CombinatorConfig = {
   nonPayingSymbols: [10, 11, 12, 13, 14, 15],
   payingSymbols: [1, 2, 3, 4, 5, 6, 7, 8, 9],
   minCombinationLength: 3,
+  slotMachineLine: {
+    minLineLength: 5,
+    maxLineLength: 6,
+  },
 };
+
+export type NonPayingSymbol = typeof combinatorConfig.nonPayingSymbols;
+export type PayingSymbols = typeof combinatorConfig.payingSymbols;

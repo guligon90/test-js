@@ -1,4 +1,5 @@
 import { extractWinningCombinations } from "../actions";
+import { combinatorConfig } from "../definitions";
 
 test.each([
   [[1, 6, 6, 7, 2, 3], []],
@@ -65,7 +66,7 @@ test.each([
   [[1, 1, 2, 0, 0], [[2, [2, 3, 4]]]],
   [[11, 0, 0, 7, 4], [[7, [1, 2, 3]]]],
 ])(`${extractWinningCombinations.name} - when line is %j returns %j`, (line, expected) => {
-  const received = extractWinningCombinations(line);
+  const received = extractWinningCombinations(line, combinatorConfig);
 
   expect(received).toEqual(expected);
 });

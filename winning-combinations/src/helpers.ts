@@ -1,4 +1,18 @@
-import { WinningCombinations } from "./types";
+import { Primitive, WinningCombinations } from "./types";
+
+export function isPositiveInteger(value: number): boolean {
+  return Number.isInteger(value) && value > 0;
+}
+
+export function isNonNegativeInteger(value: number): boolean {
+  return Number.isInteger(value) && value >= 0;
+}
+
+export function isSubSet<T extends Primitive>(subset: T[], superset: T[]): boolean {
+  const set = (list: T[]): T[] => [...new Set(list)];
+
+  return set(subset).every((item: T) => set(superset).includes(item));
+}
 
 /**
  * Function that extracts the indexes associated to the paying symbols from a slot machine line.

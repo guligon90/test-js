@@ -1,6 +1,5 @@
-import { combinatorConfig } from "./definitions";
-import { extractNumericSequences, reduceWinningCombinations } from "./helpers";
-import { WinningCombination, WinningCombinations } from "./types";
+import { extractNumericSequences } from "../helpers";
+import { WinningCombination, WinningCombinations } from "../types";
 
 /**
  * This function receives a list of raw payable combinations without wild symbols and a config parameter.
@@ -9,7 +8,7 @@ import { WinningCombination, WinningCombinations } from "./types";
  * @param minCombinationLength number - Minimun length for a paying combination to be considered valid.
  * @returns WinningCombinations The sanitized winning combinations.
  */
-function sanitizeRegularCombinations(
+export function sanitizeRegularCombinations(
   combinations: WinningCombinations,
   minCombinationLength: number,
 ): WinningCombinations {
@@ -36,7 +35,7 @@ function sanitizeRegularCombinations(
  * @param minCombinationLength number - Minimun length for a paying combination to be considered valid.
  * @returns WinningCombinations The sanitized winning combinations.
  */
-function sanitizeWildCombinations(
+export function sanitizeWildCombinations(
   wildCombination: WinningCombination,
   combinations: WinningCombinations,
   wildSymbol: number,
@@ -55,30 +54,4 @@ function sanitizeWildCombinations(
   // Only the valid merged (sequential) combinations are extracted, i.e.
   // the ones whose size is greater than the mininum specified by the paying line
   return sanitizeRegularCombinations(rawWildCombinations, minCombinationLength);
-}
-
-/**
- * This function receives a line from a slot machine, which might contain payable symbols.
- * It returns another list, containing the sanitized winning combinations, for the allowed paying symbols.
- * @param line number[] - The slot machine line.
- * @returns WinningCombinations The sanitized winning combinations.
- */
-export function extractWinningCombinations(line: number[]): WinningCombinations {
-  const { minCombinationLength, payingSymbols, wildSymbol } = combinatorConfig;
-  const allowedSymbols = [wildSymbol, ...payingSymbols];
-
-  const combinations = allowedSymbols.reduce<WinningCombinations>(
-    (acc, payingSymbol) => reduceWinningCombinations(acc, payingSymbol, line),
-    [],
-  );
-
-  if (combinations.length > 0) {
-    const wildCombination = combinations.find((item) => item[0] === wildSymbol);
-
-    return wildCombination
-      ? sanitizeWildCombinations(wildCombination, combinations, wildSymbol, minCombinationLength)
-      : sanitizeRegularCombinations(combinations, minCombinationLength);
-  }
-
-  return [];
 }
