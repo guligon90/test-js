@@ -1,4 +1,4 @@
-import { isPositiveInteger, isNonNegativeInteger, isSubSet } from "../helpers";
+import { isPositiveInteger, isSubSet } from "../helpers";
 import { CombinatorConfig, ValidationSchema } from "../types";
 
 export function buildCombinatorConfigValidationSchema(config: CombinatorConfig): ValidationSchema {
@@ -38,8 +38,7 @@ export function buildSlotMachineLineValidationSchema(line: number[], config: Com
 
   const supportedSymbols = [wildSymbol, ...payingSymbols, ...nonPayingSymbols];
   const rangeCondition = minLineLength <= line.length && line.length <= maxLineLength;
-  const hasSupportedSymbols =
-    isSubSet<number>(line, supportedSymbols) && line.every((item) => isNonNegativeInteger(item));
+  const hasSupportedSymbols = isSubSet<number>(line, supportedSymbols);
 
   return [
     {
